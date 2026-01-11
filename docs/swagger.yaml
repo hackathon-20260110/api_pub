@@ -1,0 +1,2330 @@
+basePath: /
+definitions:
+  models.Avatar:
+    properties:
+      avatar_icon_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      personality_traits:
+        type: string
+      prompt:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.UserInfo:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_mission_reward:
+        description: ミッション報酬になっているかどうか
+        type: boolean
+      key:
+        description: |-
+          テキストの場合 Key: 項目名、Value: ユーザーが入力した値
+          画像の場合 Key: 画像タイトル、Value: 画像のURL
+        type: string
+      type:
+        $ref: '#/definitions/models.UserInfoType'
+      updated_at:
+        type: string
+      user_id:
+        type: string
+      value:
+        type: string
+    type: object
+  models.UserInfoType:
+    enum:
+    - text
+    - image
+    type: string
+    x-enum-varnames:
+    - UserInfoTypeText
+    - UserInfoTypeImage
+  requests.CreateChatRequest:
+    properties:
+      initial_message:
+        description: 最初のメッセージを同時に送信する場合
+        example: こんにちは！
+        type: string
+      partner_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+    required:
+    - partner_id
+    type: object
+  requests.CreateUserInfoRequest:
+    properties:
+      image_base64:
+        type: string
+      info_type:
+        type: string
+      is_mission:
+        type: boolean
+      key:
+        type: string
+      mission_config:
+        $ref: '#/definitions/requests.MissionConfigRequest'
+      value:
+        type: string
+    required:
+    - info_type
+    - key
+    type: object
+  requests.CreateUserRequest:
+    properties:
+      bio:
+        example: よろしくお願いします！
+        type: string
+      birth_date:
+        example: "2000-01-01"
+        type: string
+      display_name:
+        example: 山田太郎
+        type: string
+      gender:
+        example: male
+        type: string
+      profile_image_base64:
+        example: data:image/jpeg;base64,...
+        type: string
+    type: object
+  requests.DebugEchoRequest:
+    properties:
+      message:
+        type: string
+    type: object
+  requests.ExecuteDiagnosisRequest:
+    properties:
+      conversation_data:
+        additionalProperties: true
+        type: object
+      target_avatar_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+    required:
+    - conversation_data
+    - target_avatar_id
+    type: object
+  requests.MissionConfigRequest:
+    properties:
+      threshold_point:
+        minimum: 1
+        type: integer
+      unlock_condition:
+        type: string
+    required:
+    - threshold_point
+    type: object
+  requests.SendAvatarChatMessageRequest:
+    properties:
+      content:
+        example: Hello, how are you?
+        type: string
+    required:
+    - content
+    type: object
+  requests.SendMatchMessageRequest:
+    properties:
+      content:
+        example: こんにちは！マッチできて嬉しいです。
+        type: string
+    required:
+    - content
+    type: object
+  requests.SendMessageRequest:
+    properties:
+      content:
+        example: こんにちは！今日はいい天気ですね。
+        type: string
+    required:
+    - content
+    type: object
+  requests.SendOnboardingMessageRequest:
+    properties:
+      content:
+        example: 映画が好きです。
+        type: string
+    required:
+    - content
+    type: object
+  requests.SendUserChatMessageRequest:
+    properties:
+      content:
+        example: Hello, nice to meet you!
+        type: string
+    required:
+    - content
+    type: object
+  requests.StartOnboardingRequest:
+    type: object
+  requests.UpdateMatchingPointRequest:
+    properties:
+      points:
+        minimum: 1
+        type: integer
+    required:
+    - points
+    type: object
+  requests.UpdateUserInfoRequest:
+    properties:
+      image_base64:
+        type: string
+      is_mission:
+        type: boolean
+      mission_config:
+        $ref: '#/definitions/requests.MissionConfigRequest'
+      value:
+        type: string
+    type: object
+  requests.UpdateUserRequest:
+    properties:
+      age:
+        example: 25
+        type: integer
+      bio:
+        example: よろしくお願いします！
+        type: string
+      display_name:
+        example: 山田太郎
+        type: string
+      gender:
+        example: male
+        type: string
+      profile_image_url:
+        example: https://example.com/images/profile.jpg
+        type: string
+    type: object
+  response.Avatar:
+    properties:
+      avatar_icon_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      personality_traits: {}
+      prompt:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  response.AvatarAI:
+    properties:
+      bio:
+        example: あなたの性格や好みを反映した分身AIです
+        type: string
+      created_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FDV
+        type: string
+      name:
+        example: 私の分身AI
+        type: string
+      personality:
+        additionalProperties:
+          type: string
+        example:
+          ' "style"': ' "casual"}'
+          '{"tone"': ' "friendly"'
+        type: object
+      updated_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      user_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+    type: object
+  response.AvatarChatMessage:
+    properties:
+      created_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      message:
+        example: Hello, how are you?
+        type: string
+      sender_type:
+        example: user
+        type: string
+    type: object
+  response.AvatarListResponse:
+    properties:
+      avatars:
+        items:
+          $ref: '#/definitions/response.AvatarWithRelation'
+        type: array
+    type: object
+  response.AvatarWithRelation:
+    properties:
+      avatar:
+        $ref: '#/definitions/response.Avatar'
+      relation:
+        $ref: '#/definitions/response.UserAvatarRelation'
+      user_age:
+        type: integer
+      user_bio:
+        type: string
+      user_display_name:
+        type: string
+    type: object
+  response.BasicProfileInfo:
+    properties:
+      age:
+        type: integer
+      bio:
+        type: string
+      display_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      profile_image_url:
+        type: string
+    type: object
+  response.Chat:
+    properties:
+      created_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      is_matched:
+        example: false
+        type: boolean
+      last_message:
+        example: こんにちは！
+        type: string
+      last_message_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      matching_score:
+        example: 75
+        type: integer
+      partner_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+      partner_image_url:
+        example: https://example.com/images/profile2.jpg
+        type: string
+      partner_name:
+        example: 佐藤花子
+        type: string
+      unread_count:
+        example: 0
+        type: integer
+      updated_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      user_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+    type: object
+  response.ChatScore:
+    properties:
+      chat_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      current_score:
+        example: 75
+        type: integer
+      max_score:
+        example: 100
+        type: integer
+      score_breakdown:
+        additionalProperties:
+          type: integer
+        type: object
+      unlock_threshold:
+        description: マッチング成立に必要なスコア
+        example: 80
+        type: integer
+      updated_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+    type: object
+  response.CreateChatResponse:
+    properties:
+      chat:
+        $ref: '#/definitions/response.Chat'
+    type: object
+  response.DebugEchoResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  response.DebugIDTokenResponse:
+    properties:
+      expires_in:
+        example: "3600"
+        type: string
+      id_token:
+        example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjFlOWdkazcifQ...
+        type: string
+      token_type:
+        example: Bearer
+        type: string
+      user_id:
+        example: user-12345
+        type: string
+    type: object
+  response.DiagnosisDetail:
+    properties:
+      analysis_result:
+        additionalProperties: true
+        description: AI分析詳細
+        type: object
+      can_direct_chat:
+        type: boolean
+      conversation_data:
+        additionalProperties: true
+        description: 会話データ
+        type: object
+      created_at:
+        type: string
+      diagnosis_score:
+        type: integer
+      id:
+        type: string
+      points_earned:
+        type: integer
+      target_avatar:
+        allOf:
+        - $ref: '#/definitions/response.AvatarAI'
+        description: 相手のAvatar詳細
+      user_avatar:
+        allOf:
+        - $ref: '#/definitions/response.AvatarAI'
+        description: 自分のAvatar詳細
+    type: object
+  response.DiagnosisDetailResponse:
+    properties:
+      diagnosis:
+        $ref: '#/definitions/response.DiagnosisDetail'
+    type: object
+  response.DiagnosisHistory:
+    properties:
+      can_direct_chat:
+        type: boolean
+      created_at:
+        type: string
+      diagnosis_score:
+        type: integer
+      id:
+        type: string
+      points_earned:
+        type: integer
+      target_avatar_name:
+        description: 相手のAvatar名
+        type: string
+      user_avatar_name:
+        description: 自分のAvatar名
+        type: string
+    type: object
+  response.DiagnosisHistoryResponse:
+    properties:
+      histories:
+        items:
+          $ref: '#/definitions/response.DiagnosisHistory'
+        type: array
+    type: object
+  response.DiagnosisResult:
+    properties:
+      analysis_result:
+        additionalProperties: true
+        description: AI分析結果
+        type: object
+      can_direct_chat:
+        description: 直接チャット可能フラグ
+        type: boolean
+      created_at:
+        type: string
+      diagnosis_id:
+        type: string
+      diagnosis_score:
+        description: 1-5
+        type: integer
+      points_earned:
+        description: 獲得ポイント
+        type: integer
+    type: object
+  response.ErrorResponse:
+    properties:
+      error:
+        example: invalid_token
+        type: string
+      message:
+        example: Firebase IDトークンが不正または無効です
+        type: string
+    type: object
+  response.GetAvatarAIResponse:
+    properties:
+      avatar_ai:
+        $ref: '#/definitions/response.AvatarAI'
+    type: object
+  response.GetAvatarChatMessagesResponse:
+    properties:
+      is_matched:
+        example: false
+        type: boolean
+      matching_point:
+        example: 50
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/response.AvatarChatMessage'
+        type: array
+    type: object
+  response.GetAvatarChatStatusResponse:
+    properties:
+      is_matched:
+        example: false
+        type: boolean
+      matching_point:
+        example: 50
+        type: integer
+      unlocked_user_infos:
+        items:
+          $ref: '#/definitions/response.UnlockedUserInfo'
+        type: array
+    type: object
+  response.GetChatDetailResponse:
+    properties:
+      chat:
+        $ref: '#/definitions/response.Chat'
+    type: object
+  response.GetChatScoreResponse:
+    properties:
+      score:
+        $ref: '#/definitions/response.ChatScore'
+    type: object
+  response.GetChatsResponse:
+    properties:
+      chats:
+        items:
+          $ref: '#/definitions/response.Chat'
+        type: array
+      total:
+        example: 10
+        type: integer
+    type: object
+  response.GetMatchMessagesResponse:
+    properties:
+      limit:
+        example: 20
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/response.MatchMessage'
+        type: array
+      offset:
+        example: 0
+        type: integer
+      total:
+        example: 20
+        type: integer
+    type: object
+  response.GetMatchedUsersResponse:
+    properties:
+      matched_users:
+        items:
+          $ref: '#/definitions/response.MatchedUser'
+        type: array
+    type: object
+  response.GetMatchesResponse:
+    properties:
+      matches:
+        items:
+          $ref: '#/definitions/response.Match'
+        type: array
+      total:
+        example: 5
+        type: integer
+    type: object
+  response.GetMeResponse:
+    properties:
+      is_registered:
+        example: true
+        type: boolean
+      user:
+        $ref: '#/definitions/response.User'
+    type: object
+  response.GetPartnersResponse:
+    properties:
+      limit:
+        example: 20
+        type: integer
+      offset:
+        example: 0
+        type: integer
+      partners:
+        items:
+          $ref: '#/definitions/response.Partner'
+        type: array
+      total:
+        example: 50
+        type: integer
+    type: object
+  response.GetSuggestionsResponse:
+    properties:
+      suggestions:
+        items:
+          $ref: '#/definitions/response.Suggestion'
+        type: array
+    type: object
+  response.GetUnlockStatusResponse:
+    properties:
+      status:
+        $ref: '#/definitions/response.UnlockStatus'
+    type: object
+  response.GetUserAvatarAIResponse:
+    properties:
+      avatar_ai:
+        $ref: '#/definitions/response.AvatarAI'
+    type: object
+  response.GetUserChatMessagesResponse:
+    properties:
+      messages:
+        items:
+          $ref: '#/definitions/response.UserChatMessageResponse'
+        type: array
+    type: object
+  response.GetUserDetailResponse:
+    properties:
+      user:
+        $ref: '#/definitions/response.UserDetail'
+    type: object
+  response.MarkAsReadResponse:
+    properties:
+      message:
+        example: 通知を既読にしました
+        type: string
+    type: object
+  response.Match:
+    properties:
+      chat_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      final_score:
+        example: 85
+        type: integer
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FEV
+        type: string
+      matched_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      partner_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+      partner_image_url:
+        example: https://example.com/images/profile2.jpg
+        type: string
+      partner_name:
+        example: 佐藤花子
+        type: string
+      user_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+    type: object
+  response.MatchMessage:
+    properties:
+      content:
+        example: こんにちは！マッチできて嬉しいです。
+        type: string
+      created_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+      match_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FEV
+        type: string
+      sender_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+    type: object
+  response.MatchResponse:
+    properties:
+      match:
+        $ref: '#/definitions/response.Match'
+      message:
+        example: マッチングが成立しました！
+        type: string
+    type: object
+  response.MatchedUser:
+    properties:
+      bio:
+        example: Hello, I'm John!
+        type: string
+      display_name:
+        example: John Doe
+        type: string
+      gender:
+        example: male
+        type: string
+      matched_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      profile_image_url:
+        example: https://example.com/image.jpg
+        type: string
+      user_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+    type: object
+  response.Message:
+    properties:
+      chat_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      content:
+        example: こんにちは！今日はいい天気ですね。
+        type: string
+      created_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+      sender_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      sender_type:
+        description: '"user" or "avatar_ai"'
+        example: user
+        type: string
+    type: object
+  response.MissionResponse:
+    properties:
+      id:
+        type: string
+      is_unlocked:
+        type: boolean
+      threshold_point_condition:
+        type: integer
+      unlock_condition:
+        type: string
+      unlocked_at:
+        type: string
+      user_info_id:
+        type: string
+    type: object
+  response.OnboardingCompleteResponse:
+    properties:
+      avatar:
+        $ref: '#/definitions/models.Avatar'
+      user_infos:
+        items:
+          $ref: '#/definitions/models.UserInfo'
+        type: array
+    type: object
+  response.Partner:
+    properties:
+      age:
+        example: 24
+        type: integer
+      bio:
+        example: よろしくお願いします！
+        type: string
+      display_name:
+        example: 佐藤花子
+        type: string
+      gender:
+        example: female
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FBV
+        type: string
+      profile_image_url:
+        example: https://example.com/images/profile2.jpg
+        type: string
+    type: object
+  response.PredefinedKeyInfo:
+    properties:
+      can_be_mission:
+        type: boolean
+      display_name:
+        type: string
+      info_type:
+        type: string
+      key:
+        type: string
+      placeholder:
+        type: string
+    type: object
+  response.PredefinedKeysResponse:
+    properties:
+      keys:
+        items:
+          $ref: '#/definitions/response.PredefinedKeyInfo'
+        type: array
+    type: object
+  response.ReplyAssistResponse:
+    properties:
+      context:
+        example: 初めてのメッセージに対する返信
+        type: string
+      suggested_replies:
+        example:
+        - '["ありがとうございます！こちらこそよろしくお願いします。"'
+        - ' "こちらこそ！お話できるのを楽しみにしています。"]'
+        items:
+          type: string
+        type: array
+    type: object
+  response.SendAvatarChatMessageResponse:
+    properties:
+      avatar_response:
+        $ref: '#/definitions/response.AvatarChatMessage'
+      is_matched:
+        example: false
+        type: boolean
+      matching_point:
+        example: 50
+        type: integer
+      message:
+        example: Message sent successfully
+        type: string
+      point_change:
+        example: 10
+        type: integer
+      unlocked_missions:
+        items:
+          $ref: '#/definitions/response.UnlockedUserInfo'
+        type: array
+    type: object
+  response.SendMatchMessageResponse:
+    properties:
+      message:
+        $ref: '#/definitions/response.MatchMessage'
+    type: object
+  response.SendMessageResponse:
+    properties:
+      ai_response:
+        allOf:
+        - $ref: '#/definitions/response.Message'
+        description: AIからの自動返信がある場合
+      matching_score:
+        example: 75
+        type: integer
+      message:
+        $ref: '#/definitions/response.Message'
+    type: object
+  response.SendOnboardingMessageResponse:
+    properties:
+      message:
+        example: メッセージを受け付けました
+        type: string
+    type: object
+  response.SendUserChatMessageResponse:
+    properties:
+      chat_message:
+        $ref: '#/definitions/response.UserChatMessageResponse'
+      message:
+        example: Message sent successfully
+        type: string
+    type: object
+  response.StartOnboardingResponse:
+    properties:
+      chat_room_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      message:
+        example: オンボーディングチャットを開始しました。Firestoreからメッセージを取得してください。
+        type: string
+    type: object
+  response.Suggestion:
+    properties:
+      category:
+        description: interests, hobbies, work, etc.
+        example: interests
+        type: string
+      description:
+        example: お互いの趣味について詳しく聞いてみましょう
+        type: string
+      examples:
+        example:
+        - '["どんな本が好きですか？"'
+        - ' "最近読んだ本はありますか？"]'
+        items:
+          type: string
+        type: array
+      id:
+        example: suggestion_123456
+        type: string
+      title:
+        example: 共通の趣味について話す
+        type: string
+    type: object
+  response.UnlockStatus:
+    properties:
+      can_match:
+        description: マッチング可能かどうか
+        example: false
+        type: boolean
+      chat_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      current_score:
+        example: 75
+        type: integer
+      is_unlocked:
+        example: false
+        type: boolean
+      remaining_score:
+        description: アンロックまでに必要なスコア
+        example: 5
+        type: integer
+      unlock_threshold:
+        example: 80
+        type: integer
+    type: object
+  response.UnlockedUserInfo:
+    properties:
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      key:
+        example: hobby
+        type: string
+      value:
+        example: reading
+        type: string
+    type: object
+  response.UpdateMatchingPointResponse:
+    properties:
+      avatar_id:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      matching_point:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  response.User:
+    properties:
+      age:
+        example: 25
+        type: integer
+      bio:
+        example: よろしくお願いします！
+        type: string
+      created_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      display_name:
+        example: 山田太郎
+        type: string
+      gender:
+        example: male
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      onboarding_completed:
+        example: false
+        type: boolean
+      profile_image_url:
+        example: https://example.com/images/profile.jpg
+        type: string
+      updated_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+    type: object
+  response.UserAvatarRelation:
+    properties:
+      avatar_id:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      matching_point:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  response.UserChatMessageResponse:
+    properties:
+      created_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      message:
+        example: Hello, nice to meet you!
+        type: string
+      sender_id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      sender_type:
+        example: user
+        type: string
+    type: object
+  response.UserDetail:
+    properties:
+      age:
+        example: 24
+        type: integer
+      avatar_ai_accessible:
+        description: チャット開始済みかどうか
+        example: false
+        type: boolean
+      bio:
+        example: よろしくお願いします！
+        type: string
+      created_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      display_name:
+        example: 佐藤花子
+        type: string
+      gender:
+        example: female
+        type: string
+      has_avatar_ai:
+        example: true
+        type: boolean
+      id:
+        example: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+        type: string
+      interests:
+        example:
+        - '["読書"'
+        - ' "映画"]'
+        items:
+          type: string
+        type: array
+      location:
+        example: 東京都
+        type: string
+      occupation:
+        example: エンジニア
+        type: string
+      profile_image_url:
+        example: https://example.com/images/profile2.jpg
+        type: string
+      updated_at:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+    type: object
+  response.UserInfoResponse:
+    properties:
+      id:
+        type: string
+      info_type:
+        type: string
+      is_mission:
+        type: boolean
+      is_unlocked:
+        type: boolean
+      key:
+        type: string
+      key_display_name:
+        type: string
+      mission_id:
+        type: string
+      value:
+        type: string
+    type: object
+  response.UserProfileResponse:
+    properties:
+      basic_info:
+        $ref: '#/definitions/response.BasicProfileInfo'
+      missions:
+        items:
+          $ref: '#/definitions/response.MissionResponse'
+        type: array
+      user_info_list:
+        items:
+          $ref: '#/definitions/response.UserInfoResponse'
+        type: array
+    type: object
+info:
+  contact: {}
+  license:
+    name: MIT
+  title: Hackathon API
+  version: "1.0"
+paths:
+  /auth/me:
+    get:
+      description: AuthorizationヘッダーのFirebase IDトークンからログイン中のユーザー情報を取得する
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.User'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: ログイン中ユーザー取得
+      tags:
+      - auth
+  /avatar-chats/{avatar_id}/messages:
+    get:
+      description: アバターとのチャット履歴を取得する
+      parameters:
+      - description: アバターID
+        in: path
+        name: avatar_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: チャット履歴取得成功
+          schema:
+            $ref: '#/definitions/response.GetAvatarChatMessagesResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: アバターチャットメッセージ取得
+      tags:
+      - avatar-chat
+    post:
+      description: アバターにメッセージを送信し、応答を受け取る
+      parameters:
+      - description: アバターID
+        in: path
+        name: avatar_id
+        required: true
+        type: string
+      - description: メッセージ送信リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.SendAvatarChatMessageRequest'
+      responses:
+        "200":
+          description: メッセージ送信成功
+          schema:
+            $ref: '#/definitions/response.SendAvatarChatMessageResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: アバターチャットメッセージ送信
+      tags:
+      - avatar-chat
+  /avatar-chats/{avatar_id}/status:
+    get:
+      description: アバターとのマッチングステータスを取得する
+      parameters:
+      - description: アバターID
+        in: path
+        name: avatar_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ステータス取得成功
+          schema:
+            $ref: '#/definitions/response.GetAvatarChatStatusResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: アバターチャットステータス取得
+      tags:
+      - avatar-chat
+  /avatars:
+    get:
+      description: 異性のアバター一覧を取得し、ユーザーとの関係性（マッチングポイント）も含める
+      responses:
+        "200":
+          description: アバター一覧取得成功
+          schema:
+            $ref: '#/definitions/response.AvatarListResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: アバター一覧取得（マッチングポイント付き）
+      tags:
+      - avatars
+  /avatars/{avatarId}/matching-points:
+    post:
+      description: 指定されたアバターとのマッチングポイントを更新する
+      parameters:
+      - description: アバターID（ULID）
+        in: path
+        name: avatarId
+        required: true
+        type: string
+      - description: 更新するポイント数
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UpdateMatchingPointRequest'
+      responses:
+        "200":
+          description: マッチングポイント更新成功
+          schema:
+            $ref: '#/definitions/response.UpdateMatchingPointResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: アバターが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: マッチングポイント更新
+      tags:
+      - avatars
+  /chats:
+    get:
+      description: 自分が参加しているチャットの一覧を取得する
+      responses:
+        "200":
+          description: チャット一覧取得成功
+          schema:
+            $ref: '#/definitions/response.GetChatsResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 自分のチャット一覧取得
+      tags:
+      - chats
+    post:
+      description: 相手との新しいチャットを開始する
+      parameters:
+      - description: チャット開始リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateChatRequest'
+      responses:
+        "200":
+          description: チャット開始成功
+          schema:
+            $ref: '#/definitions/response.CreateChatResponse'
+        "400":
+          description: リクエストが不正、または既にチャットが存在する
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: 相手が見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 新しいチャット開始
+      tags:
+      - chats
+  /chats/{partnerUserId}:
+    get:
+      description: 特定のチャットの詳細情報を取得する（IDは相手のUserID）
+      parameters:
+      - description: 相手のユーザーID（ULID）
+        in: path
+        name: partnerUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: チャット詳細取得成功
+          schema:
+            $ref: '#/definitions/response.GetChatDetailResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このチャットにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: チャットが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 特定チャットの詳細取得
+      tags:
+      - chats
+  /chats/{partnerUserId}/match:
+    post:
+      description: マッチング条件を達成した場合にマッチングを成立させる（サーバー側で自動判定、Firestore通知）
+      parameters:
+      - description: 相手のユーザーID（ULID）
+        in: path
+        name: partnerUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: マッチング成立成功
+          schema:
+            $ref: '#/definitions/response.MatchResponse'
+        "400":
+          description: マッチング条件を満たしていない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このチャットにアクセスする権限がない、または既にマッチング済み
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: チャットが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: マッチング成立（サーバー側で自動判定）
+      tags:
+      - matches
+  /chats/{partnerUserId}/messages:
+    post:
+      description: 相手AIにメッセージを送信する（IDは相手のUserID、メッセージ履歴はFirestoreから直接取得）
+      parameters:
+      - description: 相手のユーザーID（ULID）
+        in: path
+        name: partnerUserId
+        required: true
+        type: string
+      - description: メッセージ送信リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.SendMessageRequest'
+      responses:
+        "200":
+          description: メッセージ送信成功
+          schema:
+            $ref: '#/definitions/response.SendMessageResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このチャットにアクセスする権限がない、またはマッチング済み
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: チャットが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: メッセージ送信
+      tags:
+      - chats
+  /chats/{partnerUserId}/score:
+    get:
+      description: 特定チャットの現在のマッチングポイントを取得する（IDは相手のUserID）
+      parameters:
+      - description: 相手のユーザーID（ULID）
+        in: path
+        name: partnerUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: マッチングポイント取得成功
+          schema:
+            $ref: '#/definitions/response.GetChatScoreResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このチャットにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: チャットが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 現在のマッチングポイント取得
+      tags:
+      - chats
+  /chats/{partnerUserId}/unlock-status:
+    get:
+      description: 特定チャットのアンロック状態（マッチング可能かどうか）を取得する（IDは相手のUserID）
+      parameters:
+      - description: 相手のユーザーID（ULID）
+        in: path
+        name: partnerUserId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: アンロック状態取得成功
+          schema:
+            $ref: '#/definitions/response.GetUnlockStatusResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このチャットにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: チャットが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: アンロック状態取得
+      tags:
+      - matches
+  /debug/atuch-check:
+    get:
+      responses: {}
+      summary: Atuch Check
+      tags:
+      - debug
+  /debug/echo:
+    post:
+      parameters:
+      - description: メッセージ
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/requests.DebugEchoRequest'
+      responses:
+        "200":
+          description: OK! Echo is healthy
+          schema:
+            $ref: '#/definitions/response.DebugEchoResponse'
+      summary: Echo
+      tags:
+      - debug
+  /debug/endpoints:
+    get:
+      responses: {}
+      summary: Endpoints
+      tags:
+      - debug
+  /debug/health:
+    get:
+      responses:
+        "200":
+          description: OK! Server is healthy
+          schema:
+            type: string
+      summary: Health check
+      tags:
+      - debug
+  /debug/id-token:
+    get:
+      description: |-
+        Firebase ID token（IDトークン）を直接生成します。このトークンはテスト・開発用途で使用できます。
+        このトークンはBearerトークンとしてAuthorizationヘッダーで直接使用できます。
+        内部的には、カスタムトークンを生成してからFirebase REST APIで交換しています。
+      parameters:
+      - description: Firebase User ID (UID)
+        in: query
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ID token generated successfully
+          schema:
+            $ref: '#/definitions/response.DebugIDTokenResponse'
+        "400":
+          description: userId parameter is missing or empty
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Failed to generate ID token
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "503":
+          description: Firebase Web API Key not configured
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Firebase ID Tokenを生成
+      tags:
+      - debug
+  /diagnosis/{diagnosisId}:
+    get:
+      description: 特定の診断結果の詳細情報を取得する
+      parameters:
+      - description: 診断ID（ULID）
+        in: path
+        name: diagnosisId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 診断詳細取得成功
+          schema:
+            $ref: '#/definitions/response.DiagnosisDetailResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: アクセス権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: 診断結果が見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: サーバーエラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 診断詳細取得
+      tags:
+      - diagnosis
+  /diagnosis/execute:
+    post:
+      description: 自分のAvatarと相手のAvatarの会話を分析して相性診断を実行し、マッチングポイントを加算する
+      parameters:
+      - description: 診断リクエスト
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.ExecuteDiagnosisRequest'
+      responses:
+        "200":
+          description: 診断実行成功
+          schema:
+            $ref: '#/definitions/response.DiagnosisResult'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Avatarが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: サーバーエラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Avatar間診断実行
+      tags:
+      - diagnosis
+  /diagnosis/history:
+    get:
+      description: ユーザーの診断履歴一覧を取得する
+      parameters:
+      - default: 20
+        description: 取得件数
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: オフセット
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: 診断履歴取得成功
+          schema:
+            $ref: '#/definitions/response.DiagnosisHistoryResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: サーバーエラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 診断履歴取得
+      tags:
+      - diagnosis
+  /matches:
+    get:
+      description: 自分がマッチングした相手の一覧を取得する
+      responses:
+        "200":
+          description: マッチ一覧取得成功
+          schema:
+            $ref: '#/definitions/response.GetMatchesResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: マッチ一覧取得
+      tags:
+      - matches
+  /matches/{id}/messages:
+    get:
+      description: マッチした相手（本人）とのメッセージ履歴を取得する
+      parameters:
+      - description: マッチID
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: 20
+        description: 取得件数
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: オフセット
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: メッセージ履歴取得成功
+          schema:
+            $ref: '#/definitions/response.GetMatchMessagesResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このマッチにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: マッチが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 本人とのメッセージ履歴取得
+      tags:
+      - matches
+    post:
+      description: マッチした相手（本人）にメッセージを送信する
+      parameters:
+      - description: マッチID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: メッセージ送信リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.SendMatchMessageRequest'
+      responses:
+        "200":
+          description: メッセージ送信成功
+          schema:
+            $ref: '#/definitions/response.SendMatchMessageResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このマッチにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: マッチが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 本人とのメッセージ送信
+      tags:
+      - matches
+  /matches/{id}/reply-assist:
+    get:
+      description: 相手からの最新メッセージに対する返信をAIが提案する（チャットルーム入室時や返信受信時に自動取得）
+      parameters:
+      - description: マッチID（ULID）
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 返信対象のメッセージID（指定しない場合は最新メッセージ）
+        in: query
+        name: messageId
+        type: string
+      responses:
+        "200":
+          description: 返信アシスト取得成功
+          schema:
+            $ref: '#/definitions/response.ReplyAssistResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このマッチにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: マッチが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 返信アシスト
+      tags:
+      - matches
+  /matches/{id}/suggestions:
+    get:
+      description: マッチした相手との会話を促進するための話題提案を取得する
+      parameters:
+      - description: マッチID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 話題提案取得成功
+          schema:
+            $ref: '#/definitions/response.GetSuggestionsResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: このマッチにアクセスする権限がない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: マッチが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 話題提案取得
+      tags:
+      - matches
+  /matches/candidates:
+    get:
+      description: マッチング前の相手候補の一覧を取得する（基本情報のみ）
+      parameters:
+      - default: 20
+        description: 取得件数
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: オフセット
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: 相手候補一覧取得成功
+          schema:
+            $ref: '#/definitions/response.GetPartnersResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 相手候補一覧取得
+      tags:
+      - matches
+  /notification/read/{id}:
+    post:
+      consumes:
+      - application/json
+      description: 指定された通知IDの通知を既読状態にします
+      parameters:
+      - description: 通知ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.MarkAsReadResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 通知を既読にする
+      tags:
+      - notification
+  /onboarding/chats/messages:
+    post:
+      description: オンボーディングチャットメッセージを送信する
+      parameters:
+      - description: オンボーディングチャットメッセージ送信リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.SendOnboardingMessageRequest'
+      responses:
+        "200":
+          description: オンボーディングチャットメッセージ送信成功
+          schema:
+            $ref: '#/definitions/response.SendOnboardingMessageResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: オンボーディングチャットメッセージ送信
+      tags:
+      - onboarding
+  /onboarding/finish:
+    post:
+      description: オンボーディングチャットを完了する
+      responses:
+        "200":
+          description: オンボーディングチャット完了成功
+          schema:
+            $ref: '#/definitions/response.OnboardingCompleteResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: オンボーディングチャット完了
+      tags:
+      - onboarding
+  /onboarding/start:
+    post:
+      description: オンボーディングチャットを開始する
+      parameters:
+      - description: オンボーディングチャット開始リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.StartOnboardingRequest'
+      responses:
+        "200":
+          description: オンボーディングチャット開始成功
+          schema:
+            $ref: '#/definitions/response.StartOnboardingResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: オンボーディングチャット開始
+      tags:
+      - onboarding
+  /profile/predefined-keys:
+    get:
+      description: アプリで定義されているプロフィール項目の一覧を取得
+      responses:
+        "200":
+          description: 定義済み項目一覧
+          schema:
+            $ref: '#/definitions/response.PredefinedKeysResponse'
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 定義済みプロフィール項目一覧取得
+      tags:
+      - profile
+  /user-chats/{partner_id}/messages:
+    get:
+      consumes:
+      - application/json
+      description: マッチしているユーザーとのチャット履歴を取得する
+      parameters:
+      - description: 相手ユーザーID
+        in: path
+        name: partner_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: メッセージ一覧取得成功
+          schema:
+            $ref: '#/definitions/response.GetUserChatMessagesResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: マッチしていないユーザーのメッセージ取得
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: ユーザーチャットメッセージ一覧取得
+      tags:
+      - user-chat
+    post:
+      consumes:
+      - application/json
+      description: マッチしているユーザーにメッセージを送信する
+      parameters:
+      - description: 相手ユーザーID
+        in: path
+        name: partner_id
+        required: true
+        type: string
+      - description: メッセージ内容
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.SendUserChatMessageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: メッセージ送信成功
+          schema:
+            $ref: '#/definitions/response.SendUserChatMessageResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: マッチしていないユーザーへのメッセージ送信
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: ユーザーチャットメッセージ送信
+      tags:
+      - user-chat
+  /user-chats/matched:
+    get:
+      consumes:
+      - application/json
+      description: マッチしているユーザーの一覧を取得する
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: マッチしているユーザー一覧取得成功
+          schema:
+            $ref: '#/definitions/response.GetMatchedUsersResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: マッチしているユーザー一覧取得
+      tags:
+      - user-chat
+  /users:
+    post:
+      description: ユーザーを作成する
+      parameters:
+      - description: ユーザー作成リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateUserRequest'
+      responses:
+        "200":
+          description: ユーザー作成成功
+          schema:
+            $ref: '#/definitions/response.User'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: ユーザー作成
+      tags:
+      - users
+  /users/{userId}:
+    get:
+      description: 特定ユーザーの公開情報を取得する（段階的に情報が公開される）
+      parameters:
+      - description: ユーザーID（ULID）
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ユーザー情報取得成功
+          schema:
+            $ref: '#/definitions/response.GetUserDetailResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: ユーザーが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 特定ユーザーの公開情報取得
+      tags:
+      - users
+  /users/{userId}/avatar-ai:
+    get:
+      description: 特定ユーザーの分身AI情報を取得する（チャット開始後のみアクセス可能）
+      parameters:
+      - description: ユーザーID（ULID）
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 分身AI情報取得成功
+          schema:
+            $ref: '#/definitions/response.GetUserAvatarAIResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "403":
+          description: チャットが開始されていないためアクセス不可
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: ユーザーまたは分身AIが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 特定ユーザーの分身AI取得
+      tags:
+      - users
+  /users/{userId}/profile:
+    get:
+      description: 指定ユーザーのプロフィール情報を取得（ミッション解除状況含む）
+      parameters:
+      - description: 対象ユーザーID
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: プロフィール情報
+          schema:
+            $ref: '#/definitions/response.UserProfileResponse'
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: ユーザーが見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 他ユーザーのプロフィール取得
+      tags:
+      - profile
+  /users/me:
+    get:
+      description: 自分の全情報を取得する（マイページ用）。ユーザーが登録されていない場合はis_registered=falseを返す。
+      responses:
+        "200":
+          description: 自分の情報取得成功
+          schema:
+            $ref: '#/definitions/response.GetMeResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 自分の情報取得（マイページ用）
+      tags:
+      - users
+    put:
+      description: 自分のプロフィール情報を更新する
+      parameters:
+      - description: ユーザー更新リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UpdateUserRequest'
+      responses:
+        "200":
+          description: 情報更新成功
+          schema:
+            $ref: '#/definitions/response.User'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 自分の情報更新
+      tags:
+      - users
+  /users/me/avatar-ai:
+    get:
+      description: 自分の分身AI情報を取得する
+      responses:
+        "200":
+          description: 分身AI情報取得成功
+          schema:
+            $ref: '#/definitions/response.GetAvatarAIResponse'
+        "401":
+          description: 認証されていない、またはトークンが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: 分身AIが存在しない（オンボーディング未完了）
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 自分の分身AI情報取得
+      tags:
+      - users
+  /users/me/profile:
+    get:
+      description: 自分の全プロフィール情報を取得（ミッション情報含む）
+      responses:
+        "200":
+          description: プロフィール情報
+          schema:
+            $ref: '#/definitions/response.UserProfileResponse'
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: 自分のプロフィール取得
+      tags:
+      - profile
+  /users/me/profile/info:
+    post:
+      description: ユーザーのプロフィール項目を作成（ミッション設定可能）
+      parameters:
+      - description: プロフィール項目作成リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateUserInfoRequest'
+      responses:
+        "200":
+          description: 作成された項目情報
+          schema:
+            $ref: '#/definitions/response.UserInfoResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: プロフィール項目作成
+      tags:
+      - profile
+  /users/me/profile/info/{infoId}:
+    delete:
+      description: ユーザーのプロフィール項目を削除
+      parameters:
+      - description: プロフィール項目ID
+        in: path
+        name: infoId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 削除成功
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: プロフィール項目が見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: プロフィール項目削除
+      tags:
+      - profile
+    put:
+      description: ユーザーのプロフィール項目を更新
+      parameters:
+      - description: プロフィール項目ID
+        in: path
+        name: infoId
+        required: true
+        type: string
+      - description: プロフィール項目更新リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.UpdateUserInfoRequest'
+      responses:
+        "200":
+          description: 更新された項目情報
+          schema:
+            $ref: '#/definitions/response.UserInfoResponse'
+        "400":
+          description: リクエストが不正
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: 認証エラー
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: プロフィール項目が見つからない
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: プロフィール項目更新
+      tags:
+      - profile
+securityDefinitions:
+  Bearer:
+    description: 'Firebase IDトークンをBearerトークンとして送信してください。例: "Bearer eyJhbGciOiJSUzI1NiIs..."'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

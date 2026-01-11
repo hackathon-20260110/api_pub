@@ -1,0 +1,37 @@
+name: Docs Generation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  swagger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@v1.16.6
+
+      - name: Generate Swagger docs
+        run: swag init -g main.go -o docs
+
+      - name: Check for uncommitted changes in docs
+        run: |
+          git diff --exit-code -- docs/
+          if [ $? -ne 0 ]; then
+            echo "::error::Swagger docs are out of date. Please run 'swag init' and commit the changes."
+            exit 1
+          fi

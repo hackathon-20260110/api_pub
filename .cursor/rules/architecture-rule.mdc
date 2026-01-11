@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+ - APIのアーキテクチャが以下のディレクトリに記載されている: [documents/ARCHITECTURE.md](../documents/ARCHITECTURE.md)
+ - このドキュメントに従って適切な箇所にコーディングを行え
